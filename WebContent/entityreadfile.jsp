@@ -51,7 +51,7 @@ path = path + db2.getEntity(email3,fname);
 					ent.setUpt_src(data);
 				
 				else
-					System.out.println("invalid data::" + data);
+					System.out.println("Invalid Data::" + data);
 				index++;
 			}
 			index = 0;

@@ -5,22 +5,34 @@
     <%@page import="java.sql.*" %>
     <head>
     <style>
-    .myfiles
-    {
-     font-weight: bold;
-     font-style: verdana;
-   
-     color: green;
-    }
-     .myfileschild
-    {
     
-     height: 120px;
-     width: 150px;
-     
-     background-color: grey;
-     color: white;
-     
+   .column {
+    float: left;
+    width: 20%;
+    padding: 10px;
+    background-color: green; 
+   
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;  
+    
+}
+.row
+{
+margin-left: 400px;
+
+}
+
+    #s1
+    {
+    float: left;
+      color: green;
+      font-style: verdana;
+      font-weight: bold;
     }
     
     </style>
@@ -32,13 +44,26 @@ DB db1 = new DB();
 rs1 = db1.getFiles(email);
 while(rs1.next())
 {%>
-	<div class = "myfiles">
-	Load Files into Database
-	<div class = "myfileschild">
-	 <a href="#"><%=rs1.getString(3) %></a>
-	 <a href="#"><%=rs1.getString(4) %></a>
-	<a href="#"><%=rs1.getString(5) %></a> <script></script>
-	</div>
+
+
+	<div class="row">
+	<h2>File ID : <%=rs1.getString(2)%></h2>
+  <div class="column" style="background-color:#dd8;">
+      <h2>Entity File: </h2>
+     <h2><a href="#"><%=rs1.getString(3) %></a></h2>
+    <p>File Not Loaded Into Database</p>
+  </div>
+  <div class="column" style="background-color:#dd9;">
+  <h2>Security File: </h2>
+     <h2><a href="#"><%=rs1.getString(4) %></a></h2>
+    <p>File Not Loaded Into Database</p>
+  </div>
+  <div class="column" style="background-color:#ddb;">
+  <h2>Price File: </h2>
+    <h2><a href="#"><%=rs1.getString(5) %></a></h2>
+    <p>File Not Loaded Into Database</p>
+  </div>
+</div>
 	<span>   
 	<br>
 	</span>
@@ -46,6 +71,5 @@ while(rs1.next())
 	
 	
 <%}
-
 %>
 </html>
