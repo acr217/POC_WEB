@@ -1,5 +1,7 @@
 package com.POC;
-import java.sql.*;  
+import java.awt.List;
+import java.sql.*;
+import java.util.ArrayList;  
 		public class DB{  
 		private Connection con;
 		private Statement stmt;
@@ -7,6 +9,8 @@ import java.sql.*;
 		private Statement stmt2;
 		private Statement stmt3;
 		private Statement stmt4;
+		private Statement stmt5;
+		private Statement stmt6;
 		public DB(){
 			
 		try{ 
@@ -114,6 +118,25 @@ import java.sql.*;
 			return rs;
 		}
 		
+		public boolean uploadentity(ArrayList<Entity> l1,String email,String fileid) throws SQLException
+		{
+			
+			stmt5 = con.createStatement(); 
+			stmt6 = con.createStatement(); 
+			int i1 =0 ;
+			for(int i=0;i<l1.size();i++){
+				
+			
+			i1 = stmt5.executeUpdate("insert into entity_temp_arun values('"+l1.get(i).getInc_date()+"','"+l1.get(i).getEid()+"','"+l1.get(i).getEname()+"','"+l1.get(i).getPri_ast_id()+"','"+l1.get(i).getBank_br_code()+"','"+l1.get(i).getStatus()+"','"+l1.get(i).getTer_date()+"','"+l1.get(i).getUpt_date()+"','"+l1.get(i).getUpt_src()+"')");
+			
+				int i2 = stmt6.executeUpdate("insert into entitydata values('"+email+"','"+fileid+"','"+l1.get(i).getEid()+"')");
+			
+		}
+			if(i1 > 0)
+				return true;
+			else
+				return false;
+		}
 		}	
 	
 

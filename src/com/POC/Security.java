@@ -1,5 +1,7 @@
 package com.POC;
 
+import java.util.ArrayList;
+
 public class Security {
 	
      private String sec_al;
@@ -9,6 +11,7 @@ public class Security {
      private String upt_date;
      private String upt_src;
      private String eid;
+     public ArrayList<Security> list1;
 	public String getSec_al() {
 		return sec_al;
 	}
@@ -51,6 +54,18 @@ public class Security {
 	public void setEid(String eid) {
 		this.eid = eid;
 	}
+	
+	public ArrayList<Security> getSecList()
+	    {
+	    	
+	    	return list1;
+	    }
+	
+	public void setSecList(ArrayList<Security> list1 )
+	    {
+	    	
+	    	this.list1 = list1;
+	    }
 	@Override
 	public String toString() {
 		return "Security [sec_al=" + sec_al + ", pri_ast_id=" + pri_ast_id + ", ticker=" + ticker + ", src_intfc_inst="

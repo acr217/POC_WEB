@@ -1,5 +1,7 @@
 package com.POC;
 
+import java.util.ArrayList;
+
 public class Price {
 
 	private String eff_date;
@@ -15,6 +17,7 @@ public class Price {
 	private int ex_subs;
 	private int ex_reds;
 	private int out_sh;
+	public ArrayList<Price> list1;
 	public String getEff_date() {
 		return eff_date;
 	}
@@ -93,6 +96,18 @@ public class Price {
 	public void setOut_sh(int out_sh) {
 		this.out_sh = out_sh;
 	}
+	
+	public ArrayList<Price> getPriList()
+	    {
+	    	
+	    	return list1;
+	    }
+	
+	public void setPriList(ArrayList<Price> list1 )
+	    {
+	    	
+	    	this.list1 = list1;
+	    }
 	@Override
 	public String toString() {
 		return "Price [eff_date=" + eff_date + ", sec_al=" + sec_al + ", src_intfc_inst=" + src_intfc_inst

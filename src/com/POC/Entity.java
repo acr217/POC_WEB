@@ -1,5 +1,8 @@
 package com.POC;
 
+import java.awt.List;
+import java.util.ArrayList;
+
 public class Entity {
 	
 
@@ -12,6 +15,7 @@ public class Entity {
 		private String ter_date;
 		private String upt_date;
 		private String upt_src;
+		public ArrayList<Entity> list1;
 		public String getInc_date() {
 			return inc_date;
 		}
@@ -66,6 +70,19 @@ public class Entity {
 		public void setUpt_src(String upt_src) {
 			this.upt_src = upt_src;
 		}
+		
+		public ArrayList<Entity> getEntList()
+  	    {
+  	    	
+  	    	return list1;
+  	    }
+		
+		public void setEntList(ArrayList<Entity> list1 )
+  	    {
+  	    	
+  	    	this.list1 = list1;
+  	    }
+		
 		@Override
 		public String toString() {
 			return "Entity [inc_date=" + inc_date + ", eid=" + eid + ", ename=" + ename + ", pri_ast_id=" + pri_ast_id
