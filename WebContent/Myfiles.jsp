@@ -57,12 +57,12 @@ while(rs1.next())
   </div>
   <div class="column" style="background-color:#dd9;">
   <h2>Security File: </h2>
-     <h2><a href="uploadsecurity.jsp"><%=rs1.getString(4) %></a></h2>
+     <h2><a href="uploadsecurity.jsp?id=${fileid}"><%=rs1.getString(4) %></a></h2>
     <p>File Not Loaded Into Database</p>
   </div>
   <div class="column" style="background-color:#ddb;">
   <h2>Price File: </h2>
-    <h2><a href="uploadprice.jsp"><%=rs1.getString(5) %></a></h2>
+    <h2><a href="uploadprice.jsp?id=${fileid}"><%=rs1.getString(5) %></a></h2>
     <p>File Not Loaded Into Database</p>
   </div>
 </div>

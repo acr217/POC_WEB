@@ -11,6 +11,10 @@ import java.util.ArrayList;
 		private Statement stmt4;
 		private Statement stmt5;
 		private Statement stmt6;
+		private Statement stmt7;
+		private Statement stmt8;
+		private Statement stmt9;
+		private Statement stmt10;
 		public DB(){
 			
 		try{ 
@@ -78,10 +82,10 @@ import java.util.ArrayList;
 		public String getEntity(String email,String fname) throws SQLException
 		{
 			stmt3 = con.createStatement(); 
-			ResultSet rs = stmt3.executeQuery("select entity from filenames where Fname='"+fname+"' and Email='"+email+"' ");
+			ResultSet rs = stmt3.executeQuery("select * from filenames where Fname='"+fname+"' and Email='"+email+"' ");
 			if(rs.next())
 			{
-				return rs.getString(0);
+				return rs.getString(3);
 			}
 			else 
 				return null;
@@ -90,10 +94,10 @@ import java.util.ArrayList;
 		public String getSecurity(String email,String fname) throws SQLException
 		{
 			stmt3 = con.createStatement(); 
-			ResultSet rs = stmt3.executeQuery("select security from filenames where Fname='"+fname+"' and Email='"+email+"' ");
+			ResultSet rs = stmt3.executeQuery("select * from filenames where Fname='"+fname+"' and Email='"+email+"' ");
 			if(rs.next())
 			{
-				return rs.getString(0);
+				return rs.getString(4);
 			}
 			else 
 				return null;
@@ -102,10 +106,10 @@ import java.util.ArrayList;
 		public String getPrice(String email,String fname) throws SQLException
 		{
 			stmt3 = con.createStatement(); 
-			ResultSet rs = stmt3.executeQuery("select price from filenames where Fname='"+fname+"' and Email='"+email+"' ");
+			ResultSet rs = stmt3.executeQuery("select * from filenames where Fname='"+fname+"' and Email='"+email+"' ");
 			if(rs.next())
 			{
-				return rs.getString(0);
+				return rs.getString(5);
 			}
 			else 
 				return null;
@@ -118,13 +122,13 @@ import java.util.ArrayList;
 			return rs;
 		}
 		
-		public boolean uploadentity(ArrayList<Entity> l1,String email,String fileid) throws SQLException
+		public boolean uploadentity(ArrayList<Entity> l1,String email,String fileid) throws Exception
 		{
 			
 			stmt5 = con.createStatement(); 
 			stmt6 = con.createStatement(); 
 			int i1 =0 ;
-			for(int i=0;i<l1.size();i++){
+			for(int i=0;i < l1.size();i++){
 				
 			
 			i1 = stmt5.executeUpdate("insert into entity_temp_arun values('"+l1.get(i).getInc_date()+"','"+l1.get(i).getEid()+"','"+l1.get(i).getEname()+"','"+l1.get(i).getPri_ast_id()+"','"+l1.get(i).getBank_br_code()+"','"+l1.get(i).getStatus()+"','"+l1.get(i).getTer_date()+"','"+l1.get(i).getUpt_date()+"','"+l1.get(i).getUpt_src()+"')");
@@ -132,11 +136,50 @@ import java.util.ArrayList;
 				int i2 = stmt6.executeUpdate("insert into entitydata values('"+email+"','"+fileid+"','"+l1.get(i).getEid()+"')");
 			
 		}
-			if(i1 > 0)
+			
 				return true;
-			else
-				return false;
+			
 		}
+		
+		public boolean uploadsecurity(ArrayList<Security> l1,String email,String fileid) throws Exception
+		{
+			
+			stmt7 = con.createStatement(); 
+			stmt8 = con.createStatement(); 
+			int i1 =0 ;
+			for(int i=0;i < l1.size();i++){
+				
+			
+			i1 = stmt7.executeUpdate("insert into securitydata values('"+l1.get(i).getSec_al()+"','"+l1.get(i).getPri_ast_id()+"','"+l1.get(i).getTicker()+"','"+l1.get(i).getSrc_intfc_inst()+"','"+l1.get(i).getUpt_date()+"','"+l1.get(i).getUpt_src()+"','"+l1.get(i).getEid()+"')");
+			
+				int i2 = stmt8.executeUpdate("insert into securitydata1 values('"+email+"','"+fileid+"','"+l1.get(i).getSec_al()+"','"+l1.get(i).getEid()+"')");
+			
+		}
+			
+				return true;
+			
+		}
+		
+		public boolean uploadprice(ArrayList<Price> l1,String email,String fileid) throws Exception
+		{
+			
+			stmt9 = con.createStatement(); 
+			stmt10 = con.createStatement(); 
+			int i1 =0 ;
+			for(int i=0;i<l1.size();i++){
+				
+			
+			i1 = stmt9.executeUpdate("insert into price_temp_arun values('"+l1.get(i).getEff_date()+"','"+l1.get(i).getSec_al()+"','"+l1.get(i).getSrc_intfc_inst()+"','"+l1.get(i).getUpt_date()+"','"+l1.get(i).getUpt_src()+"','"+l1.get(i).getPr_val()+"','"+l1.get(i).getPx_lval()+"','"+l1.get(i).getCur_nav()+"','"+l1.get(i).getSubs()+"','"+l1.get(i).getReds()+"','"+l1.get(i).getEx_subs()+"','"+l1.get(i).getEx_reds()+"','"+l1.get(i).getOut_sh()+"')");
+			
+				int i2 = stmt10.executeUpdate("insert into pricedata values('"+email+"','"+fileid+"','"+l1.get(i).getSec_al()+"')");
+			
+		}
+			
+				return true;
+			
+		}
+		
+		
 		}	
 	
 
