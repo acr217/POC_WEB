@@ -77,10 +77,11 @@ public class Entity {
   	    	return list1;
   	    }
 		
-		public void setEntList(ArrayList<Entity> list1 )
+		public ArrayList<Entity> setEntList(ArrayList<Entity> list1 )
   	    {
   	    	
   	    	this.list1 = list1;
+  	    	return list1;
   	    }
 		
 		@Override

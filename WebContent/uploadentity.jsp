@@ -67,7 +67,7 @@ path = path + db2.getEntity(email3,fname);
 		
 		
 	   Entity e = new Entity();
-	   e.setEntList(entList);
+	   System.out.println( "hello"+e.setEntList(entList));
 	    %>
 
 <%

@@ -74,10 +74,11 @@
                 fileName1[j] = fileName;
                boolean isInMemory = fi.isInMemory();
                long sizeInBytes = fi.getSize();
+               j++;
                //out.println(fileName);
                // Write the file
-
-               if( fileName1[k].lastIndexOf("\\") >= 0 ) {
+              /* 
+                if( fileName1[k].lastIndexOf("\\") >= 0 ) {
                    file = new File( filePath + 
                    fileName1[k].substring( fileName1[k].lastIndexOf("\\"))) ;
                 } else {
@@ -88,7 +89,7 @@
                 System.out.println("Uploaded Filename: " + filePath + 
                 fileName1[k] + "<br>");
                    
-                j++;k++;
+               k++; */
                     }
            
          }
@@ -123,6 +124,35 @@
         		
         	
         	}
+        
+
+               // Process the uploaded file items
+              
+
+             
+
+         // Process the uploaded file items
+         Iterator<FileItem> i1 = fileItems.iterator();
+              
+          FileItem fi1 = null;
+               while ( i1.hasNext () ) {
+                   fi1 = (FileItem)i1.next();
+                  if ( !fi1.isFormField () ) {
+        	 if( fileName1[k].lastIndexOf("\\") >= 0 ) {
+                 file = new File( filePath + 
+                 fileName1[k].substring( fileName1[k].lastIndexOf("\\"))) ;
+              } else {
+                 file = new File( filePath + 
+                 fileName1[k].substring(fileName1[k].lastIndexOf("\\")+1)) ;
+              }
+              fi1.write( file ) ;
+              System.out.println("Uploaded Filename: " + filePath + 
+              fileName1[k] + "<br>");
+              k++;
+                  }
+               }
+        	
+        	
       }
   
         	catch(Exception e)
