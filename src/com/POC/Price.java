@@ -18,6 +18,19 @@ public class Price {
 	private int ex_reds;
 	private int out_sh;
 	public ArrayList<Price> list1;
+	private String Fileid;
+	public ArrayList<Price> getList1() {
+		return list1;
+	}
+	public void setList1(ArrayList<Price> list1) {
+		this.list1 = list1;
+	}
+	public String getFileid() {
+		return Fileid;
+	}
+	public void setFileid(String fileid) {
+		Fileid = fileid;
+	}
 	public String getEff_date() {
 		return eff_date;
 	}
@@ -97,17 +110,7 @@ public class Price {
 		this.out_sh = out_sh;
 	}
 	
-	public ArrayList<Price> getPriList()
-	    {
-	    	
-	    	return list1;
-	    }
 	
-	public void setPriList(ArrayList<Price> list1 )
-	    {
-	    	
-	    	this.list1 = list1;
-	    }
 	@Override
 	public String toString() {
 		return "Price [eff_date=" + eff_date + ", sec_al=" + sec_al + ", src_intfc_inst=" + src_intfc_inst

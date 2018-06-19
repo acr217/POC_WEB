@@ -12,6 +12,19 @@ public class Security {
      private String upt_src;
      private String eid;
      public ArrayList<Security> list1;
+     private String Fileid;
+	public ArrayList<Security> getList1() {
+		return list1;
+	}
+	public void setList1(ArrayList<Security> list1) {
+		this.list1 = list1;
+	}
+	public String getFileid() {
+		return Fileid;
+	}
+	public void setFileid(String fileid) {
+		Fileid = fileid;
+	}
 	public String getSec_al() {
 		return sec_al;
 	}
@@ -55,17 +68,7 @@ public class Security {
 		this.eid = eid;
 	}
 	
-	public ArrayList<Security> getSecList()
-	    {
-	    	
-	    	return list1;
-	    }
 	
-	public void setSecList(ArrayList<Security> list1 )
-	    {
-	    	
-	    	this.list1 = list1;
-	    }
 	@Override
 	public String toString() {
 		return "Security [sec_al=" + sec_al + ", pri_ast_id=" + pri_ast_id + ", ticker=" + ticker + ", src_intfc_inst="

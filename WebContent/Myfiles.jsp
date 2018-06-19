@@ -40,38 +40,115 @@ margin-left: 400px;
 <%
 ResultSet rs1;
 String email = (String)session.getAttribute("Email");
-
+int i = 0;
+int j =0;
 DB db1 = new DB();
 rs1 = db1.getFiles(email);
 while(rs1.next())
 {%>
 
-   <% String fileid = rs1.getString(2);%>
+  <script>
   
-	<div class="row">
-	<h2>File ID : <%=rs1.getString(2)%></h2>
-  <div class="column" style="background-color:#dd8;">
-      <h2>Entity File: </h2>
-     <h2><a href="uploadentity.jsp?id=${fileid}"><%=rs1.getString(3) %></a></h2>
-    <p>File Not Loaded Into Database</p>
-  </div>
-  <div class="column" style="background-color:#dd9;">
-  <h2>Security File: </h2>
-     <h2><a href="uploadsecurity.jsp?id=${fileid}"><%=rs1.getString(4) %></a></h2>
-    <p>File Not Loaded Into Database</p>
-  </div>
-  <div class="column" style="background-color:#ddb;">
-  <h2>Price File: </h2>
-    <h2><a href="uploadprice.jsp?id=${fileid}"><%=rs1.getString(5) %></a></h2>
-    <p>File Not Loaded Into Database</p>
-  </div>
-</div>
+  var i = 0;
+  if(i!=0)
+   i = k;
+  var ele = document.createElement("div");
+  ele.style.display = "block";
+  ele.setAttribute("class","row");
+  var h2 = document.createElement("h2");
+  h2.innerHTML = "File ID: <%=rs1.getString(2)%>";
+  ele.appendChild(h2);
+ //document.body.appendChild(ele);
+  i++;
+  var ele1 = document.createElement("div");
+  ele1.style.display="block";
+  ele1.setAttribute("class","column");
+  ele1.setAttribute("id","dive"+"<%=rs1.getString(2)%>");
+  ele1.style.backgroundColor="#dd8";
+  var hh2 = document.createElement("h2");
+  hh2.innerHTML = "Entity File:";
+  ele1.appendChild(hh2);
+  ele.appendChild(ele1);
+  
+  var a = document.createElement("a");
+  var ss = '<%=rs1.getString(2)%>';
+  //alert(ss);
+  var ih = document.createElement("input");
+  ih.setAttribute("type","hidden");
+  ih.setAttribute("id",'<%=rs1.getString(2)%>');
+  ih.setAttribute("value","<%=rs1.getString(2)%>");
+  a.setAttribute("href","uploadentity.jsp");
+  a.innerHTML = "<%=rs1.getString(3)%>";
+  ele1.appendChild(ih);
+  var b = document.getElementById('<%=rs1.getString(2)%>').value;
+  //alert(b);
+  ele1.appendChild(a);
+  
+  var p = document.createElement("p");
+  p.setAttribute("id","pe"+"<%=rs1.getString(2)%>");
+  p.innerHTML="File Not Loaded Into Database";
+  ele1.appendChild(p);
+  ele.appendChild(ele1);
+  
+  
+  var ele2 = document.createElement("div");
+  ele2.style.display="block";
+  ele2.setAttribute("class","column");
+  ele2.setAttribute("id","divs"+"<%=rs1.getString(2)%>");
+  ele2.style.backgroundColor="#dd8";
+  var hh2 = document.createElement("h2");
+  hh2.innerHTML = "Security File:";
+  ele2.appendChild(hh2);
+  
+  var a = document.createElement("a");
+  a.setAttribute("id","as"+"<%=rs1.getString(2)%>");
+  a.setAttribute("name","<%=rs1.getString(2)%>");
+  a.setAttribute("href","uploadsecurity.jsp");
+  a.innerHTML = "<%=rs1.getString(4)%>";
+  ele2.appendChild(a);
+  
+  var p = document.createElement("p");
+  p.setAttribute("id","ps"+"<%=rs1.getString(2)%>");
+  p.innerHTML="File Not Loaded Into Database";
+  ele2.appendChild(p);
+  ele.appendChild(ele2);
+  //alert(i);
+  
+  var ele3 = document.createElement("div");
+  ele3.style.display="block";
+  ele3.setAttribute("class","column");
+  ele3.setAttribute("id","divp"+"<%=rs1.getString(2)%>");
+  ele3.style.backgroundColor="#dd8";
+  var hh2 = document.createElement("h2");
+  hh2.innerHTML = "Price File:";
+  ele3.appendChild(hh2);
+  
+  var a = document.createElement("a");
+  a.setAttribute("id","ap"+"<%=rs1.getString(2)%>");
+  a.setAttribute("name","<%=rs1.getString(2)%>");
+  a.setAttribute("href","uploadprice.jsp")
+  a.innerHTML = "<%=rs1.getString(5)%>";
+  ele3.appendChild(a);
+  
+  var p = document.createElement("p");
+  p.setAttribute("id","pap"+"<%=rs1.getString(2)%>");
+  p.innerHTML="File Not Loaded Into Database";
+  ele3.appendChild(p);
+  ele.appendChild(ele3);
+ 
+  document.body.appendChild(ele);
+  
+  
+  
+  
+            </script>
+  
+
+
 	<span>   
 	<br>
 	</span>
 	</div>
-	
-	
 <%}
 %>
 </html>

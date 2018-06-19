@@ -16,6 +16,20 @@ public class Entity {
 		private String upt_date;
 		private String upt_src;
 		public ArrayList<Entity> list1;
+		private String Fileid;
+		
+		public ArrayList<Entity> getList1() {
+			return list1;
+		}
+		public void setList1(ArrayList<Entity> list1) {
+			this.list1 = list1;
+		}
+		public String getFileid() {
+			return Fileid;
+		}
+		public void setFileid(String fileid) {
+			Fileid = fileid;
+		}
 		public String getInc_date() {
 			return inc_date;
 		}
@@ -71,18 +85,7 @@ public class Entity {
 			this.upt_src = upt_src;
 		}
 		
-		public ArrayList<Entity> getEntList()
-  	    {
-  	    	
-  	    	return list1;
-  	    }
 		
-		public ArrayList<Entity> setEntList(ArrayList<Entity> list1 )
-  	    {
-  	    	
-  	    	this.list1 = list1;
-  	    	return list1;
-  	    }
 		
 		@Override
 		public String toString() {

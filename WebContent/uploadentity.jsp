@@ -40,9 +40,9 @@ path = path + db2.getEntity(email3,fname);
 				else if (index == 2)
 					ent.setEname(data);
 				else if (index == 3)
-					ent.setPri_ast_id(Integer.parseInt(data.trim()));
+					ent.setPri_ast_id(Integer.parseInt(data));
 				else if (index == 4)
-					ent.setBank_br_code(Integer.parseInt(data.trim()));
+					ent.setBank_br_code(Integer.parseInt(data));
 				else if (index == 5)
 					ent.setStatus(data);
 				else if (index == 6)
@@ -57,6 +57,7 @@ path = path + db2.getEntity(email3,fname);
 				index++;
 			}
 			index = 0;
+			
 			entList.add(ent);
 		}
 		
@@ -67,18 +68,18 @@ path = path + db2.getEntity(email3,fname);
 		
 		
 	   Entity e = new Entity();
-	   System.out.println( "hello"+e.setEntList(entList));
+	   e.setList1(entList);
 	    %>
 
 <%
 String email6 = (String)session.getAttribute("Email");
 String id= request.getParameter("id");
-DB db3 = new DB();
-Entity e1 = new Entity();
-System.out.println("Getting list:"+e1.getEntList());
-ArrayList<Entity> aue = e1.getEntList();
- if(db3.uploadentity(entList,email6,id))
+DB db = new DB();
+String fileid1 = db.getFileid(id);
+out.println(fileid1);
+ if(db.uploadentity(entList,email6,fileid1))
   {
+	
 	out.println(" Successfully Uploaded into database");
   }
     

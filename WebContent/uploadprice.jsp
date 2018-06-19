@@ -4,6 +4,8 @@
 
   <%@page import="com.POC.*" %>
     <%@page import="java.sql.*" %>
+    <%@page import="javax.servlet.*" %>
+    <%@page import="javax.servlet.http.*" %>
 <%@page import="java.io.BufferedReader"%>
 <%@page import="java.io.FileReader"%>
 <%@page import="java.io.IOException"%>
@@ -72,16 +74,16 @@ path2 = path2 + db4.getPrice(email5,fname2);
 		System.out.println(priList);
 		
 		Price p = new Price();
-		p.setPriList(priList);
+		p.setList1(priList);
 	
 %>
 <%
 String email6 = (String)session.getAttribute("Email");
 String id= request.getParameter("id");
-DB db3 = new DB();
-Price p1 = new Price();
-ArrayList<Price> aue2 = p1.getPriList();
- if(db3.uploadprice(aue2,email6,id))
+DB db = new DB();
+String fileid1 = db.getFileid2(id);
+
+ if(db.uploadprice(priList,email6,fileid1))
   {
 	out.println(" Successfully Uploaded Price into database");
   }

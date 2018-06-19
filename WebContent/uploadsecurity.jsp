@@ -11,6 +11,7 @@
 <%@page import="java.util.List"%>
 <%@page import="java.util.Scanner"%>
 
+
 <%
 
 
@@ -37,7 +38,7 @@ String data = scanner1.next();
 if (index1 == 0)
 	sec.setSec_al(data);
 else if (index1 == 1)
-	sec.setPri_ast_id(Integer.parseInt(data));
+	sec.setPri_ast_id(Integer.parseInt(data.trim()));
 else if (index1 == 2)
 	sec.setTicker(data);
 else if (index1 == 3)
@@ -61,16 +62,15 @@ reader1.close();
 
 System.out.println(secList);
 Security s = new Security();
-s.setSecList(secList);
+s.setList1(secList);
 
 %>
 <%
 String email6 = (String)session.getAttribute("Email");
 String id= request.getParameter("id");
-DB db4 = new DB();
-Security s1 = new Security();
-ArrayList<Security> aue1 = s1.getSecList();
- if(db4.uploadsecurity(aue1,email6,id))
+DB db = new DB();
+String fileid1 = db.getFileid1(id);
+ if(db.uploadsecurity(secList,email6,fileid1))
   {
 	out.println(" Successfully Uploaded Security into database");
   }
