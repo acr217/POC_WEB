@@ -1,9 +1,12 @@
+<%@page
+	import="com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException"%>
+
 <html>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
 
-  <%@page import="com.POC.*" %>
-    <%@page import="java.sql.*" %>
+<%@page import="com.POC.*"%>
+<%@page import="java.sql.*"%>
 <%@page import="java.io.BufferedReader"%>
 <%@page import="java.io.FileReader"%>
 <%@page import="java.io.IOException"%>
@@ -13,10 +16,10 @@
 
 <%
 String email3 = (String)session.getAttribute("Email");
-String fname =(String)session.getAttribute("text9");
+String id= request.getParameter("id");
 DB db2 = new DB();
 String path = "E:\\apache-tomcat-8.0.33\\webapps\\data\\";
-path = path + db2.getEntity(email3,fname);
+path = path + db2.getEntitySecurity(email3,id);
 		BufferedReader reader = new BufferedReader(new FileReader(
 				path));
 
@@ -24,15 +27,15 @@ path = path + db2.getEntity(email3,fname);
 		String line = null;
 		Scanner scanner = null;
 		int index = 0;
-		ArrayList<Entity> entList = new ArrayList<>();
+		ArrayList<EntitySecurity> entList = new ArrayList<>();
 
 		while ((line = reader.readLine()) != null) {
-			Entity ent = new Entity();
+			EntitySecurity ent = new EntitySecurity();
 			scanner = new Scanner(line);
 			scanner.useDelimiter(",");
 			while (scanner.hasNext()) {
 				String data = scanner.next();
-				System.out.println("Entity"+data);
+				//System.out.println("Entity"+data);
 				if (index == 0)
 					ent.setInc_date(data);
 				else if (index == 1)
@@ -48,9 +51,9 @@ path = path + db2.getEntity(email3,fname);
 				else if (index == 6)
 					ent.setTer_date(data);
 				else if (index == 7)
-					ent.setUpt_date(data);
+					ent.setSec_al(data);
 				else if (index == 8)
-					ent.setUpt_src(data);
+					ent.setTicker(data);
 				
 				else
 					System.out.println("Invalid Data::" + data);
@@ -67,23 +70,26 @@ path = path + db2.getEntity(email3,fname);
 		System.out.println(entList);
 		
 		
-	   Entity e = new Entity();
-	   e.setList1(entList);
 	    %>
 
 <%
 String email6 = (String)session.getAttribute("Email");
-String id= request.getParameter("id");
+
 DB db = new DB();
-String fileid1 = db.getFileid(id);
-out.println(fileid1);
- if(db.uploadentity(entList,email6,fileid1))
+//String fileid1 = db.getFileid(id);
+//out.println(fileid1);
+try{
+ if(db.uploadentitysecurity(entList,email6,id))
   {
 	
 	out.println(" Successfully Uploaded into database");
   }
     
- 
+}
+catch(MySQLIntegrityConstraintViolationException e1)
+{
+	out.println("File Already Uploaded");
+}
    
 
 

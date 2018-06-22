@@ -60,11 +60,11 @@ import java.util.ArrayList;
 			System.out.println(id2);
 		}
 		
-		public int Insertdata(String email,String fname,String entity,String security,String price) throws SQLException
+		public int Insertdata(String email,String fname,String entity,String price) throws SQLException
 		{
 			
 			stmt1 = con.createStatement();  
-			int i1 = stmt1.executeUpdate("insert into filenames values('"+email+"','"+fname+"','"+entity+"','"+security+"','"+price+"')");
+			int i1 = stmt1.executeUpdate("insert into filenames values('"+email+"','"+fname+"','"+entity+"','"+price+"')");
 			
 			System.out.println("Correct");
 			
@@ -88,7 +88,7 @@ import java.util.ArrayList;
 				return false;
 		}
 		
-		public String getEntity(String email,String fname) throws SQLException
+		public String getEntitySecurity(String email,String fname) throws SQLException
 		{
 			stmt3 = con.createStatement(); 
 			ResultSet rs = stmt3.executeQuery("select * from filenames where Fname='"+fname+"' and Email='"+email+"' ");
@@ -100,17 +100,6 @@ import java.util.ArrayList;
 				return null;
 		}
 		
-		public String getSecurity(String email,String fname) throws SQLException
-		{
-			stmt3 = con.createStatement(); 
-			ResultSet rs = stmt3.executeQuery("select * from filenames where Fname='"+fname+"' and Email='"+email+"' ");
-			if(rs.next())
-			{
-				return rs.getString(4);
-			}
-			else 
-				return null;
-		}
 		
 		public String getPrice(String email,String fname) throws SQLException
 		{
@@ -118,7 +107,7 @@ import java.util.ArrayList;
 			ResultSet rs = stmt3.executeQuery("select * from filenames where Fname='"+fname+"' and Email='"+email+"' ");
 			if(rs.next())
 			{
-				return rs.getString(5);
+				return rs.getString(4);
 			}
 			else 
 				return null;
@@ -131,44 +120,34 @@ import java.util.ArrayList;
 			return rs;
 		}
 		
-		public boolean uploadentity(ArrayList<Entity> l1,String email,String fileid) throws Exception
+		public boolean uploadentitysecurity(ArrayList<EntitySecurity> l1,String email,String fileid) throws Exception
 		{
 			
 			stmt5 = con.createStatement(); 
 			stmt6 = con.createStatement(); 
 			int i1 =0 ;
+			CallableStatement cStmt = con.prepareCall("{call Security_Ingestion(?,?,?,?,?,?,?,?,?)}");
 			for(int i=0;i < l1.size();i++){
 				
-			
-			i1 = stmt5.executeUpdate("insert into entity_temp_arun values('"+l1.get(i).getInc_date()+"','"+l1.get(i).getEid()+"','"+l1.get(i).getEname()+"','"+l1.get(i).getPri_ast_id()+"','"+l1.get(i).getBank_br_code()+"','"+l1.get(i).getStatus()+"','"+l1.get(i).getTer_date()+"','"+l1.get(i).getUpt_date()+"','"+l1.get(i).getUpt_src()+"','"+fileid+"')");
-			
-				int i2 = stmt6.executeUpdate("insert into entitydata values('"+email+"','"+l1.get(i).getEid()+"')");
-			
+				cStmt.setString(1, l1.get(i).getInc_date());
+				cStmt.setString(2, l1.get(i).getEid());
+				cStmt.setString(3, l1.get(i).getEname());
+				cStmt.setInt(4, l1.get(i).getPri_ast_id());
+				cStmt.setInt(5, l1.get(i).getBank_br_code());
+				cStmt.setString(6, l1.get(i).getStatus());
+				cStmt.setString(7, l1.get(i).getTer_date());
+				cStmt.setString(8, l1.get(i).getSec_al());
+				cStmt.setString(9, l1.get(i).getTicker());
+				stmt5.executeUpdate("insert into entity_temp_arun(Fileid,Email) values('"+fileid+"','"+email+"')");
+		         stmt6.executeUpdate("insert into securitydata(Fileid,Email) values('"+fileid+"','"+email+"')");
+				cStmt.execute();
 		}
 			
 				return true;
 			
 		}
 		
-		public boolean uploadsecurity(ArrayList<Security> l1,String email,String fileid) throws Exception
-		{
-			
-			stmt7 = con.createStatement(); 
-			stmt8 = con.createStatement(); 
-			int i1 =0 ;
-			
-			for(int i=0;i < l1.size();i++){
-				
-			
-			i1 = stmt7.executeUpdate("insert into securitydata values('"+l1.get(i).getSec_al()+"','"+l1.get(i).getPri_ast_id()+"','"+l1.get(i).getTicker()+"','"+l1.get(i).getSrc_intfc_inst()+"','"+l1.get(i).getUpt_date()+"','"+l1.get(i).getUpt_src()+"','"+l1.get(i).getEid()+"','"+fileid+"')");
-			
-				int i2 = stmt8.executeUpdate("insert into securitydata1 values('"+email+"','"+l1.get(i).getSec_al()+"','"+l1.get(i).getEid()+"')");
-			
-		}
-			
-				return true;
-			
-		}
+	
 		
 		public boolean uploadprice(ArrayList<Price> l1,String email,String fileid) throws Exception
 		{
@@ -176,13 +155,24 @@ import java.util.ArrayList;
 			stmt9 = con.createStatement(); 
 			stmt10 = con.createStatement(); 
 			int i1 =0 ;
+			CallableStatement cStmt = con.prepareCall("{call price_temp(?, ?,?,?,?,?,?,?,?,?)}");
+			
 			for(int i=0;i<l1.size();i++){
 				
-			
-			i1 = stmt9.executeUpdate("insert into price_temp_arun values('"+l1.get(i).getEff_date()+"','"+l1.get(i).getSec_al()+"','"+l1.get(i).getSrc_intfc_inst()+"','"+l1.get(i).getUpt_date()+"','"+l1.get(i).getUpt_src()+"','"+l1.get(i).getPr_val()+"','"+l1.get(i).getPx_lval()+"','"+l1.get(i).getCur_nav()+"','"+l1.get(i).getSubs()+"','"+l1.get(i).getReds()+"','"+l1.get(i).getEx_subs()+"','"+l1.get(i).getEx_reds()+"','"+l1.get(i).getOut_sh()+"','"+fileid+"')");
-			
-				int i2 = stmt10.executeUpdate("insert into pricedata values('"+email+"','"+l1.get(i).getSec_al()+"')");
-			
+				cStmt.setString(1, l1.get(i).getEff_date());
+				cStmt.setString(2, l1.get(i).getSec_al());
+				cStmt.setInt(3, l1.get(i).getPr_val());
+				cStmt.setInt(4, l1.get(i).getPx_lval());
+				cStmt.setInt(5, l1.get(i).getCur_nav());
+				cStmt.setInt(6, l1.get(i).getSubs());
+				cStmt.setInt(7, l1.get(i).getReds());
+				cStmt.setInt(8, l1.get(i).getEx_reds());
+				cStmt.setInt(9, l1.get(i).getEx_subs());
+				cStmt.setInt(10, l1.get(i).getOut_sh());
+				int i2 = stmt9.executeUpdate("insert into price_temp_arun(Fileid,Email) values('"+fileid+"','"+email+"')");
+				
+			    cStmt.execute();
+			      
 		}
 			
 				return true;
@@ -192,6 +182,7 @@ import java.util.ArrayList;
 		public String getFileid(String file)
 		{
 			try{
+				
 			stmt11 = con.createStatement(); 
 			System.out.println(file);
 			ResultSet rs2 = stmt11.executeQuery("select * from filenames where entity='"+file+"'");
@@ -209,7 +200,7 @@ import java.util.ArrayList;
 		}
 		public String getFileid1(String file)
 		{
-			try{
+			try{	
 			stmt12 = con.createStatement(); 
 			System.out.println(file);
 			ResultSet rs2 = stmt12.executeQuery("select * from filenames where security='"+file+"'");
@@ -246,5 +237,5 @@ import java.util.ArrayList;
 		}
 		}	
 	
-
+ 
 		

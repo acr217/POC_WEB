@@ -1,3 +1,4 @@
+<%@page import="com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException"%>
 <html>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -16,10 +17,10 @@
 <%
 
 String email5 = (String)session.getAttribute("Email");
-String fname2 =(String)session.getAttribute("text9");
+String ida= request.getParameter("id");
 DB db4 = new DB();
 String path2 = "E:\\apache-tomcat-8.0.33\\webapps\\data\\";
-path2 = path2 + db4.getPrice(email5,fname2);
+path2 = path2 + db4.getPrice(email5,ida);
 		BufferedReader reader2 = new BufferedReader(new FileReader(
 				path2));
 		// read file line by line
@@ -71,7 +72,7 @@ path2 = path2 + db4.getPrice(email5,fname2);
 		//close reader
 		reader2.close();
 		
-		System.out.println(priList);
+		System.out.println("price"+priList);
 		
 		Price p = new Price();
 		p.setList1(priList);
@@ -79,15 +80,17 @@ path2 = path2 + db4.getPrice(email5,fname2);
 %>
 <%
 String email6 = (String)session.getAttribute("Email");
-String id= request.getParameter("id");
-DB db = new DB();
-String fileid1 = db.getFileid2(id);
 
- if(db.uploadprice(priList,email6,fileid1))
+DB db = new DB();
+//String fileid1 = db.getFileid2(id);
+
+ if(db.uploadprice(priList,email6,ida))
   {
 	out.println(" Successfully Uploaded Price into database");
   }
-    
+
+
+
 %>
 
 

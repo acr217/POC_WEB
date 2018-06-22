@@ -15,8 +15,7 @@
  <%
 
  try{
-	 List<Entity> Entlist = null;
-	 List<Security> Seclist = null;
+	 List<EntitySecurity> Entlist = null;
 	 List<Price> Prilist = null;
  String email2 = (String)session.getAttribute("Email");
  String text5 = (String)session.getAttribute("text9");
@@ -25,7 +24,7 @@
    String text = text5;
    int j = 0;
    int k = 0;
-   String fileName1[] = new String[3];
+   String fileName1[] = new String[2];
    int maxFileSize = 5000 * 1024;
    int maxMemSize = 5000 * 1024;
    ServletContext context = pageContext.getServletContext();
@@ -96,12 +95,12 @@
             
          
             out.println(fileName1[0].equals(fileName1[1]));
-               if(fileName1[0].equals(fileName1[1]) || fileName1[1].equals(fileName1[2]) || fileName1[0].equals(fileName1[2]))
+               if(fileName1[0].equals(fileName1[1]))
                {
             	   response.sendRedirect("Home.jsp?FileFormError=2&email="+email2+"");
                }
                
-              if(fileName1[0].equals(email2) || fileName1[1].equals(email2) || fileName1[2].equals(email2))
+              if(fileName1[0].equals(email2) || fileName1[1].equals(email2))
               {
             	   response.sendRedirect("Home.jsp?FileFormError=1&email="+email2+"");
             	  
@@ -115,7 +114,7 @@
         	 DB db = new DB();
         	 int d=0;
         	 try{
-        	d = db.Insertdata(email2,text5,fileName1[0],fileName1[1],fileName1[2]);
+        			d = db.Insertdata(email2,text5,fileName1[0],fileName1[1]);
         	 }
         	 catch(Exception e){}
         	if(d < 1)

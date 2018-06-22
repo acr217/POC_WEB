@@ -37,6 +37,7 @@ margin-left: 400px;
     
     </style>
     </head>
+    <body>
 <%
 ResultSet rs1;
 String email = (String)session.getAttribute("Email");
@@ -66,7 +67,7 @@ while(rs1.next())
   ele1.setAttribute("id","dive"+"<%=rs1.getString(2)%>");
   ele1.style.backgroundColor="#dd8";
   var hh2 = document.createElement("h2");
-  hh2.innerHTML = "Entity File:";
+  hh2.innerHTML = "SecurityIngestion File:";
   ele1.appendChild(hh2);
   ele.appendChild(ele1);
   
@@ -77,10 +78,12 @@ while(rs1.next())
   ih.setAttribute("type","hidden");
   ih.setAttribute("id",'<%=rs1.getString(2)%>');
   ih.setAttribute("value","<%=rs1.getString(2)%>");
-  a.setAttribute("href","uploadentity.jsp");
-  a.innerHTML = "<%=rs1.getString(3)%>";
-  ele1.appendChild(ih);
+  document.body.appendChild(ih);
   var b = document.getElementById('<%=rs1.getString(2)%>').value;
+  a.setAttribute("href","uploadentity.jsp?id="+b+"");
+  a.innerHTML = "<%=rs1.getString(3)%>";
+ 
+ 
   //alert(b);
   ele1.appendChild(a);
   
@@ -89,30 +92,9 @@ while(rs1.next())
   p.innerHTML="File Not Loaded Into Database";
   ele1.appendChild(p);
   ele.appendChild(ele1);
+  document.body.appendChild(ele);
   
-  
-  var ele2 = document.createElement("div");
-  ele2.style.display="block";
-  ele2.setAttribute("class","column");
-  ele2.setAttribute("id","divs"+"<%=rs1.getString(2)%>");
-  ele2.style.backgroundColor="#dd8";
-  var hh2 = document.createElement("h2");
-  hh2.innerHTML = "Security File:";
-  ele2.appendChild(hh2);
-  
-  var a = document.createElement("a");
-  a.setAttribute("id","as"+"<%=rs1.getString(2)%>");
-  a.setAttribute("name","<%=rs1.getString(2)%>");
-  a.setAttribute("href","uploadsecurity.jsp");
-  a.innerHTML = "<%=rs1.getString(4)%>";
-  ele2.appendChild(a);
-  
-  var p = document.createElement("p");
-  p.setAttribute("id","ps"+"<%=rs1.getString(2)%>");
-  p.innerHTML="File Not Loaded Into Database";
-  ele2.appendChild(p);
-  ele.appendChild(ele2);
-  //alert(i);
+ 
   
   var ele3 = document.createElement("div");
   ele3.style.display="block";
@@ -126,8 +108,8 @@ while(rs1.next())
   var a = document.createElement("a");
   a.setAttribute("id","ap"+"<%=rs1.getString(2)%>");
   a.setAttribute("name","<%=rs1.getString(2)%>");
-  a.setAttribute("href","uploadprice.jsp")
-  a.innerHTML = "<%=rs1.getString(5)%>";
+  a.setAttribute("href","uploadprice.jsp?id="+b+"");
+  a.innerHTML = "<%=rs1.getString(4)%>";
   ele3.appendChild(a);
   
   var p = document.createElement("p");
@@ -135,12 +117,7 @@ while(rs1.next())
   p.innerHTML="File Not Loaded Into Database";
   ele3.appendChild(p);
   ele.appendChild(ele3);
- 
   document.body.appendChild(ele);
-  
-  
-  
-  
             </script>
   
 
@@ -151,4 +128,5 @@ while(rs1.next())
 	</div>
 <%}
 %>
+</body>
 </html>

@@ -226,10 +226,7 @@ Enter File Set Identifier : <input type="text" name="text6" id="text1" onkeyup="
 
 <div id="msg"></div>
 <div id="dentity" class="dform">
-Select Entity file : <input type="file" accept=".csv" name="entity" id="entity"/><br><br>
-</div>
-<div id="dsecurity" class="dform">
-Select Security file : <input type="file" accept=".csv" name="security" id="security"/><br><br>
+Select SecIngestion file : <input type="file" accept=".csv" name="entity" id="entity"/><br><br>
 </div>
 
 <div id="dprice" class="dform">
