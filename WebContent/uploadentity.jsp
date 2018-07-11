@@ -67,7 +67,7 @@ path = path + db2.getEntitySecurity(email3,id);
 		//close reader
 		reader.close();
 		
-		System.out.println(entList);
+		System.out.println(entList.toString());
 		
 		
 	    %>
@@ -81,9 +81,15 @@ DB db = new DB();
 try{
  if(db.uploadentitysecurity(entList,email6,id))
   {
+	 
 	
 	out.println(" Successfully Uploaded into database");
   }
+ else
+ {
+	 out.println(entList.toString());
+	 out.println("Some error Occurred");
+ }
     
 }
 catch(MySQLIntegrityConstraintViolationException e1)

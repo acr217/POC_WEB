@@ -47,7 +47,7 @@ import java.util.ArrayList;
 			con.close(); 
 			return check;
 		}
-	public static void main(String args[]) throws Exception
+	/*public static void main(String args[]) throws Exception
 		{
 			//new DB().ifUserExists("a@gmail.com", "a"); 
 			//new DB().Insertdata("a@gmail.com","acr","qw","er","ty");
@@ -59,7 +59,7 @@ import java.util.ArrayList;
 			System.out.println(id1);
 			System.out.println(id2);
 		}
-		
+		*/
 		public int Insertdata(String email,String fname,String entity,String price) throws SQLException
 		{
 			
@@ -126,23 +126,47 @@ import java.util.ArrayList;
 			stmt5 = con.createStatement(); 
 			stmt6 = con.createStatement(); 
 			int i1 =0 ;
-			CallableStatement cStmt = con.prepareCall("{call Security_Ingestion(?,?,?,?,?,?,?,?,?)}");
-			for(int i=0;i < l1.size();i++){
-				
-				cStmt.setString(1, l1.get(i).getInc_date());
-				cStmt.setString(2, l1.get(i).getEid());
-				cStmt.setString(3, l1.get(i).getEname());
-				cStmt.setInt(4, l1.get(i).getPri_ast_id());
-				cStmt.setInt(5, l1.get(i).getBank_br_code());
-				cStmt.setString(6, l1.get(i).getStatus());
-				cStmt.setString(7, l1.get(i).getTer_date());
-				cStmt.setString(8, l1.get(i).getSec_al());
-				cStmt.setString(9, l1.get(i).getTicker());
+			CallableStatement[] cStmt = new CallableStatement[l1.size()];
+				int i =0;	
+			try{
+			for(EntitySecurity ll1 : l1){
+				cStmt[i] = con.prepareCall("call Security_Ingestion(?,?,?,?,?,?,?,?,?)");
+				System.out.println(ll1.getInc_date());
+				cStmt[i].setString(1, ll1.getInc_date());
+				System.out.println(ll1.getEid());
+				cStmt[i].setString(2, ll1.getEid());
+				System.out.println(ll1.getEname());
+				cStmt[i].setString(3, ll1.getEname());
+				System.out.println(ll1.getPri_ast_id());
+				cStmt[i].setInt(4, ll1.getPri_ast_id());
+				System.out.println(ll1.getBank_br_code());
+				cStmt[i].setInt(5, ll1.getBank_br_code());
+				System.out.println(ll1.getStatus());
+				cStmt[i].setString(6, ll1.getStatus());
+				System.out.println(ll1.getTer_date());
+				cStmt[i].setString(7, ll1.getTer_date());
+				System.out.println(ll1.getSec_al());
+				cStmt[i].setString(8, ll1.getSec_al());
+				System.out.println(ll1.getTicker());
+				cStmt[i].setString(9, ll1.getTicker());
+						
 				stmt5.executeUpdate("insert into entity_temp_arun(Fileid,Email) values('"+fileid+"','"+email+"')");
 		         stmt6.executeUpdate("insert into securitydata(Fileid,Email) values('"+fileid+"','"+email+"')");
-				cStmt.execute();
-		}
+		         
+		         i++;
+			}
 			
+				for(int i2=0;i2<l1.size();i2++)
+				{
+					cStmt[i2].execute();	
+				}
+		}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+				System.out.println("Exception caught");
+				return false;
+			}
 				return true;
 			
 		}
@@ -155,7 +179,7 @@ import java.util.ArrayList;
 			stmt9 = con.createStatement(); 
 			stmt10 = con.createStatement(); 
 			int i1 =0 ;
-			CallableStatement cStmt = con.prepareCall("{call price_temp(?, ?,?,?,?,?,?,?,?,?)}");
+			CallableStatement cStmt = con.prepareCall("{call price_temp(?,?,?,?,?,?,?,?,?,?)}");
 			
 			for(int i=0;i<l1.size();i++){
 				
