@@ -87,6 +87,7 @@ DB db = new DB();
  if(db.uploadprice(priList,email6,ida))
   {
 	out.println(" Successfully Uploaded Price into database");
+	db.prifilestatus(ida);
   }
 
 

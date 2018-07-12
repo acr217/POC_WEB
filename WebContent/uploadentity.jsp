@@ -14,6 +14,8 @@
 <%@page import="java.util.List"%>
 <%@page import="java.util.Scanner"%>
 
+<input type ="hidden" id = "ip1" value=""/>
+
 <%
 String email3 = (String)session.getAttribute("Email");
 String id= request.getParameter("id");
@@ -79,29 +81,38 @@ DB db = new DB();
 //String fileid1 = db.getFileid(id);
 //out.println(fileid1);
 try{
+	 ResultSet rs = db.getfilestatus(id);
+	 String ab = rs.getString(5);
+	 System.out.println(ab+"hello");
+	 String cd = rs.getString(6);
+		
  if(db.uploadentitysecurity(entList,email6,id))
   {
 	 
 	
-	out.println(" Successfully Uploaded into database");
-  }
+	//out.println(" Successfully Uploaded into database");
+	
+	db.filestatus(id);
+	%>
+	<jsp:forward page="/Myfiles.jsp"/>
+	<%}
+	
  else
  {
-	 out.println(entList.toString());
-	 out.println("Some error Occurred");
- }
-    
+	 //out.println(entList.toString());
+	 //out.println("Some error Occurred");%>
+	 <jsp:forward page="/Myfiles.jsp"/>
+ <%}
+ 
+
+	
+	
 }
 catch(MySQLIntegrityConstraintViolationException e1)
 {
-	out.println("File Already Uploaded");
+	out.println("File Already Uploaded ");
 }
-   
-
-
-
-
-%>
+  %> 
 
 
 </html>

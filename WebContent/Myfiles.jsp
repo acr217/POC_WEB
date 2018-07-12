@@ -4,6 +4,9 @@
     <%@page import="com.POC.*" %>
     <%@page import="java.sql.*" %>
     <head>
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <style>
     
    .column {
@@ -30,7 +33,7 @@ margin-left: 400px;
     #s1
     {
     float: left;
-      color: green;
+      color: red;
       font-style: verdana;
       font-weight: bold;
     }
@@ -49,6 +52,12 @@ while(rs1.next())
 {%>
 
   <script>
+ <% DB db = new DB(); 
+ ResultSet rs = db.getfilestatus(rs1.getString(2));
+ String ab = rs.getString(5);
+ String cd = rs.getString(6);
+ %>
+  
   
   var i = 0;
   if(i!=0)
@@ -61,13 +70,14 @@ while(rs1.next())
   ele.appendChild(h2);
  //document.body.appendChild(ele);
   i++;
+  //alert(i);
   var ele1 = document.createElement("div");
   ele1.style.display="block";
   ele1.setAttribute("class","column");
   ele1.setAttribute("id","dive"+"<%=rs1.getString(2)%>");
   ele1.style.backgroundColor="#dd8";
   var hh2 = document.createElement("h2");
-  hh2.innerHTML = "SecurityIngestion File:";
+  hh2.innerHTML = "SECENT File:";
   ele1.appendChild(hh2);
   ele.appendChild(ele1);
   
@@ -83,13 +93,25 @@ while(rs1.next())
   a.setAttribute("href","uploadentity.jsp?id="+b+"");
   a.innerHTML = "<%=rs1.getString(3)%>";
  
- 
+  
+
   //alert(b);
   ele1.appendChild(a);
   
   var p = document.createElement("p");
-  p.setAttribute("id","pe"+"<%=rs1.getString(2)%>");
-  p.innerHTML="File Not Loaded Into Database";
+  p.setAttribute("id","pe"+<%=rs1.getString(2)%>);
+ 
+  
+  if(<%=ab%> == '1')
+  {
+   a.style.display = "none";
+   p.innerHTML = "File Already Loaded";
+ }
+  else
+  {
+  a.style.display = "block";
+p.innerHTML="File Not Loaded Into Database";
+  }
   ele1.appendChild(p);
   ele.appendChild(ele1);
   document.body.appendChild(ele);
@@ -114,13 +136,35 @@ while(rs1.next())
   
   var p = document.createElement("p");
   p.setAttribute("id","pap"+"<%=rs1.getString(2)%>");
+  
+ if(<%=cd%> == '1')
+  {
+   a.style.display = "none";
+   p.innerHTML = "File Already Loaded";
+ }
+  else
+	  {
+	  a.style.display = "block";
   p.innerHTML="File Not Loaded Into Database";
+	 }
   ele3.appendChild(p);
   ele.appendChild(ele3);
   document.body.appendChild(ele);
-            </script>
   
+  var ele5 = document.createElement("form");
+  var bb = document.createElement("button");
+  bb.setAttribute("class","btn btn-primary btn-lg");
+  bb.innerHTML = "Generate Report";
+  bb.setAttribute("formaction","report.jsp");
+  ele5.appendChild(bb);
 
+  ele.appendChild(ele5);
+  document.body.appendChild(ele);
+ 
+  
+            </script>
+       
+        
 
 	<span>   
 	<br>
@@ -128,5 +172,6 @@ while(rs1.next())
 	</div>
 <%}
 %>
+
 </body>
 </html>

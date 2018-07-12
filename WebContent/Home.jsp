@@ -226,11 +226,11 @@ Enter File Set Identifier : <input type="text" name="text6" id="text1" onkeyup="
 
 <div id="msg"></div>
 <div id="dentity" class="dform">
-Select SecIngestion file : <input type="file" accept=".csv" name="entity" id="entity"/><br><br>
+Select SecIngestion file : <input type="file" accept=".csv" name="entity" id="entity" required/><br><br>
 </div>
 
 <div id="dprice" class="dform">
-Select Price File : <input type="file" accept=".csv" name="price" id="price"/><br><br>
+Select Price File : <input type="file" accept=".csv" name="price" id="price" required/><br><br>
 </div>
 <div id="dsubmit" class="dform">
 <input type="submit" id="submit" class="btn btn-primary btn-lg" value="Submit to Server" onmouseover="Myfunc1()"/><br><br>

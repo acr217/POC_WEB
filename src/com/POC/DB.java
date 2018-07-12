@@ -18,6 +18,7 @@ import java.util.ArrayList;
 		private Statement stmt11;
 		private Statement stmt12;
 		private Statement stmt13;
+		private Statement stmt14;
 		public DB(){
 			
 		try{ 
@@ -47,9 +48,11 @@ import java.util.ArrayList;
 			con.close(); 
 			return check;
 		}
-	/*public static void main(String args[]) throws Exception
+/*	public static void main(String args[]) throws Exception
 		{
-			//new DB().ifUserExists("a@gmail.com", "a"); 
+		     new DB().getfilestatus("aa");
+		    
+			/*new DB().ifUserExists("a@gmail.com", "a"); 
 			//new DB().Insertdata("a@gmail.com","acr","qw","er","ty");
 			//new DB().ajaxreq("acr","a@gmail.com");
 			String id = new DB().getFileid2("ffprice.csv");
@@ -64,7 +67,7 @@ import java.util.ArrayList;
 		{
 			
 			stmt1 = con.createStatement();  
-			int i1 = stmt1.executeUpdate("insert into filenames values('"+email+"','"+fname+"','"+entity+"','"+price+"')");
+			int i1 = stmt1.executeUpdate("insert into filenames(Email,Fname,entity,price) values('"+email+"','"+fname+"','"+entity+"','"+price+"')");
 			
 			System.out.println("Correct");
 			
@@ -120,46 +123,50 @@ import java.util.ArrayList;
 			return rs;
 		}
 		
+		@SuppressWarnings("null")
 		public boolean uploadentitysecurity(ArrayList<EntitySecurity> l1,String email,String fileid) throws Exception
 		{
+			DB dbb = new DB();
+			
 			
 			stmt5 = con.createStatement(); 
 			stmt6 = con.createStatement(); 
 			int i1 =0 ;
-			CallableStatement[] cStmt = new CallableStatement[l1.size()];
+			
 				int i =0;	
 			try{
+				ResultSet ff = dbb.getfilestatus(fileid);
+				System.out.println(ff.getString(5)+"ff");
+				if(ff.getString(5).equals("0")){
 			for(EntitySecurity ll1 : l1){
-				cStmt[i] = con.prepareCall("call Security_Ingestion(?,?,?,?,?,?,?,?,?)");
+				Statement cStmt = null ;
 				System.out.println(ll1.getInc_date());
-				cStmt[i].setString(1, ll1.getInc_date());
+				
 				System.out.println(ll1.getEid());
-				cStmt[i].setString(2, ll1.getEid());
+				
 				System.out.println(ll1.getEname());
-				cStmt[i].setString(3, ll1.getEname());
+			
 				System.out.println(ll1.getPri_ast_id());
-				cStmt[i].setInt(4, ll1.getPri_ast_id());
+			
 				System.out.println(ll1.getBank_br_code());
-				cStmt[i].setInt(5, ll1.getBank_br_code());
+				
 				System.out.println(ll1.getStatus());
-				cStmt[i].setString(6, ll1.getStatus());
+			
 				System.out.println(ll1.getTer_date());
-				cStmt[i].setString(7, ll1.getTer_date());
+			
 				System.out.println(ll1.getSec_al());
-				cStmt[i].setString(8, ll1.getSec_al());
+				
 				System.out.println(ll1.getTicker());
-				cStmt[i].setString(9, ll1.getTicker());
-						
-				stmt5.executeUpdate("insert into entity_temp_arun(Fileid,Email) values('"+fileid+"','"+email+"')");
-		         stmt6.executeUpdate("insert into securitydata(Fileid,Email) values('"+fileid+"','"+email+"')");
-		         
-		         i++;
+				String hello = null;
+			            cStmt = con.createStatement();
+						String query = "call Security_Ingestion('"+ll1.getInc_date()+"','"+ll1.getEid()+"','"+ll1.getEname()+"','"+ll1.getPri_ast_id()+"','"+ll1.getBank_br_code()+"','"+ll1.getStatus()+"','"+ll1.getTer_date()+"','"+ll1.getSec_al()+"','"+ll1.getTicker()+"','"+fileid+"','"+email+"')";
+						cStmt.executeQuery(query);
+
 			}
 			
-				for(int i2=0;i2<l1.size();i2++)
-				{
-					cStmt[i2].execute();	
 				}
+				else
+					return false;
 		}
 			catch(Exception e)
 			{
@@ -171,8 +178,60 @@ import java.util.ArrayList;
 			
 		}
 		
-	
-		
+	     public boolean filestatus(String id )
+	     {
+	    	 try
+	    	 {
+	    	 stmt14 = con.createStatement(); 
+	    	 String df = "1";
+				int gg = stmt14.executeUpdate("update filenames set entstatus = '"+df+"' where Fname = '"+id+"'");
+				
+	    	 }
+	    	 catch(Exception e)
+	    	 {
+	    		 return false;
+	    	 }
+	    	 return true;
+	     }
+	     
+
+	     public boolean prifilestatus(String id )
+	     {
+	    	 try
+	    	 {
+	    	 Statement stmt16 = con.createStatement(); 
+	    	 String df = "1";
+				int gg1 = stmt16.executeUpdate("update filenames set pristatus  = '"+df+"' where Fname = '"+id+"'");
+				
+	    	 }
+	    	 catch(Exception e)
+	    	 {
+	    		 return false;
+	    	 }
+	    	 return true;
+	     }
+		  
+	     public ResultSet getfilestatus(String id )
+	     {
+	    		ResultSet rs;
+	    	 try
+	    	 {
+	    	 Statement stmt15 = con.createStatement(); 
+				rs = stmt15.executeQuery("select * from filenames where Fname = '"+id+"' ");
+				rs.absolute(1);
+			     System.out.println(rs.getString(5));
+			     System.out.println(rs.getString(6));
+				
+	    	 }
+	    	 catch(Exception e)
+	    	 {
+	    		 e.printStackTrace();
+	    		 return null;
+	    	 }
+	    	 return rs;
+	     }
+	     
+	     
 		public boolean uploadprice(ArrayList<Price> l1,String email,String fileid) throws Exception
 		{
 			
