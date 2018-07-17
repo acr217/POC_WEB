@@ -235,32 +235,37 @@ import java.util.ArrayList;
 		public boolean uploadprice(ArrayList<Price> l1,String email,String fileid) throws Exception
 		{
 			
-			stmt9 = con.createStatement(); 
+			
 			stmt10 = con.createStatement(); 
 			int i1 =0 ;
-			CallableStatement cStmt = con.prepareCall("{call price_temp(?,?,?,?,?,?,?,?,?,?)}");
+	            DB dbb1 = new DB();
+		
+			try{
+				ResultSet ff1 = dbb1.getfilestatus(fileid);
+				System.out.println(ff1.getString(6)+"ff");
+				if(ff1.getString(6).equals("0")){
 			
-			for(int i=0;i<l1.size();i++){
+			for(Price pp1 : l1){
+				Statement stmt9 = null;
+				stmt9 = con.createStatement(); 
 				
-				cStmt.setString(1, l1.get(i).getEff_date());
-				cStmt.setString(2, l1.get(i).getSec_al());
-				cStmt.setInt(3, l1.get(i).getPr_val());
-				cStmt.setInt(4, l1.get(i).getPx_lval());
-				cStmt.setInt(5, l1.get(i).getCur_nav());
-				cStmt.setInt(6, l1.get(i).getSubs());
-				cStmt.setInt(7, l1.get(i).getReds());
-				cStmt.setInt(8, l1.get(i).getEx_reds());
-				cStmt.setInt(9, l1.get(i).getEx_subs());
-				cStmt.setInt(10, l1.get(i).getOut_sh());
-				int i2 = stmt9.executeUpdate("insert into price_temp_arun(Fileid,Email) values('"+fileid+"','"+email+"')");
-				
-			    cStmt.execute();
+				String query1 = "call price_temp('"+pp1.getEff_date()+"','"+pp1.getSec_al()+"','"+pp1.getPr_val()+"','"+pp1.getPx_lval()+"','"+pp1.getCur_nav()+"','"+pp1.getSubs()+"','"+pp1.getReds()+"','"+pp1.getEx_subs()+"','"+pp1.getEx_reds()+"','"+pp1.getOut_sh()+"','"+fileid+"','"+email+"')";
+				stmt9.executeQuery(query1);
 			      
 		}
-			
-				return true;
-			
 		}
+		else
+			return false;
+}
+	catch(Exception e)
+	{
+		e.printStackTrace();
+		System.out.println("Exception caught");
+		return false;
+	}
+		return true;
+	
+}
 		
 		public String getFileid(String file)
 		{
@@ -318,6 +323,25 @@ import java.util.ArrayList;
 		}
 			return null;
 		}
+		
+		public ResultSet reportGen(String fileid) throws SQLException
+		{
+			ResultSet rs = null;
+		try{
+		Statement stmt10 = con.createStatement();
+		String query ="call daily_perf1('"+fileid+"')";
+		stmt10.executeQuery(query);
+		Statement stmt11 = con.createStatement();
+		String query1 = "select * from daily_perf_arun where Fileid = '"+fileid+"'";
+		rs = stmt11.executeQuery(query1);
+		}
+		catch(Exception e)
+		{
+			return null;
+		}
+			return rs;
+		}
+		
 		}	
 	
  

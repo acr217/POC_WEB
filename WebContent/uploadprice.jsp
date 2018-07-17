@@ -79,18 +79,35 @@ path2 = path2 + db4.getPrice(email5,ida);
 	
 %>
 <%
-String email6 = (String)session.getAttribute("Email");
 
-DB db = new DB();
+
+DB dbd = new DB();
 //String fileid1 = db.getFileid2(id);
-
- if(db.uploadprice(priList,email6,ida))
+try{
+	
+ if(dbd.uploadprice(priList,email5,ida))
   {
 	out.println(" Successfully Uploaded Price into database");
-	db.prifilestatus(ida);
-  }
+	dbd.prifilestatus(ida);
+  
+ %>
+	<jsp:forward page="/Myfiles.jsp"/>
+	<%}
+else
+{
+	 //out.println(entList.toString());
+	 out.println("Some error Occurred");%>
+	
+<%}
 
 
+	
+	
+}
+catch(MySQLIntegrityConstraintViolationException e1)
+{
+	out.println("File Already Uploaded ");
+}
 
 %>
 

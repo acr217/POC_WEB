@@ -7,6 +7,7 @@
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
     <style>
     
    .column {
@@ -41,6 +42,7 @@ margin-left: 400px;
     </style>
     </head>
     <body>
+      <input type="hidden" id="z" name="z" value=""></input>
 <%
 ResultSet rs1;
 String email = (String)session.getAttribute("Email");
@@ -66,7 +68,7 @@ while(rs1.next())
   ele.style.display = "block";
   ele.setAttribute("class","row");
   var h2 = document.createElement("h2");
-  h2.innerHTML = "File ID: <%=rs1.getString(2)%>";
+  h2.innerHTML = "FileSet ID: <%=rs1.getString(2)%>";
   ele.appendChild(h2);
  //document.body.appendChild(ele);
   i++;
@@ -152,20 +154,25 @@ p.innerHTML="File Not Loaded Into Database";
   document.body.appendChild(ele);
   
   var ele5 = document.createElement("form");
+  ele5.setAttribute("name","formm1")
+  var inp = document.createElement("input");
+  inp.setAttribute("name","idd");
+  inp.setAttribute("value","<%=rs1.getString(2)%>");
+  inp.setAttribute("type","hidden");
+  ele5.appendChild(inp);
   var bb = document.createElement("button");
   bb.setAttribute("class","btn btn-primary btn-lg");
-  bb.innerHTML = "Generate Report";
-  bb.setAttribute("formaction","report.jsp");
+  bb.setAttribute("id","bu"+<%=rs1.getString(2)%>);
+  bb.innerHTML = "Generate Daily Report";
   ele5.appendChild(bb);
-
+  bb.setAttribute("formaction","report.jsp");
   ele.appendChild(ele5);
   document.body.appendChild(ele);
  
   
             </script>
        
-        
-
+    
 	<span>   
 	<br>
 	</span>
